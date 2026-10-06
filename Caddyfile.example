@@ -1,0 +1,33 @@
+# Caddyfile Example for DeployHub on Ubuntu Server
+# Place this at /etc/caddy/Caddyfile or alongside docker-compose
+
+# Replace with your actual domain or local server name
+deploy.yourdomain.com {
+    # Forward all traffic to the DeployHub container on port 3000
+    reverse_proxy localhost:3000
+
+    # Enable compression for faster dashboard loads
+    encode gzip zstd
+
+    # Optional security headers
+    header {
+        X-Robots-Tag "noindex, nofollow"
+        X-Frame-Options "SAMEORIGIN"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+}
+
+# Example path-based reverse proxy configuration
+# hub.yourdomain.com {
+#     # DeployHub Main Dashboard
+#     reverse_proxy localhost:3000
+#
+#     # Proxy projects on subpaths:
+#     handle_path /server-test* {
+#         reverse_proxy localhost:3001
+#     }
+#     handle_path /api-gateway* {
+#         reverse_proxy localhost:3002
+#     }
+# }
